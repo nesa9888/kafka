@@ -1,0 +1,20 @@
+---
+- name: List topics
+  hosts: all
+  vars:
+    kafka_topics: /opt/kafka/bin/kafka-topics.sh 
+    kafka_server: 192.168.220.140
+    kafka_port: 9092
+    kafka: "{{ kafka_server }}:{{ kafka_port }}"
+    zookeeper_server: 127.0.0.1
+    zookeeper_port: 2181
+    zookeeper: "{{ zookeeper_server }}:{{ zookeeper_port }}"
+
+  tasks:
+    - name: List Topics
+      command: 
+        argv: 
+          - "{{ kafka_topics }}"
+          - --list
+          - --zookeeper 
+          - "{{ zookeeper }}"

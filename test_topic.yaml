@@ -1,0 +1,6 @@
+- name: Create a Topic
+  tags: createtopic
+  shell: |
+    ./kafka-topics.sh --create --topic {{topicname}} --bootstrap-server localhost:9092
+  args:
+    chdir: "{{installation_dir}}/bin"

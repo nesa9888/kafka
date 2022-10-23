@@ -1,0 +1,29 @@
+---
+- name: Create topics
+  hosts: all 
+  vars:
+    kafka_topics: /opt/kafka/bin/kafka-topics.sh 
+    kafka_server: 192.168.220.140
+    kafka_port: 9092
+    kafka: "{{ kafka_server }}:{{ kafka_port }}"
+    replication_factor: 3
+    partitions: 6
+
+  tasks:
+
+    - name: Load CERT topics to create
+      include_vars:
+        file: /etc/ansible/create_topic1.yaml
+
+    - name: Create Topics
+      command:
+        argv: 
+          - "{{ kafka_topics }}"
+          - --create
+          - --replication-factor 
+          - "{{ replication_factor }}"
+          - --partitions 
+          - "{{ partitions }}"
+          - --topic
+          - "{{ item }}"
+      loop: "{{ topics }}"
